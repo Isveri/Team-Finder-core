@@ -1,6 +1,5 @@
 package com.evi.teamfindercore.domain;
 
-import com.evi.teamfindercore.domain.*;
 import lombok.*;
 import org.hibernate.annotations.Where;
 import org.springframework.security.core.CredentialsContainer;
@@ -37,40 +36,18 @@ public class User implements UserDetails, CredentialsContainer {
    // @NotBlank
     private String email;
 
-    private String name;
-
-    private String info;
-
-    private Integer age;
-
-    private Integer phone;
-
-    private String city;
-
-    private String profileImgName;
+    @OneToOne
+    private UserInfo userInfo;
 
     private String reason;
 
     private String bannedBy;
 
-    @ManyToMany
-    @JoinTable(
-            name = "users_groups",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "group_id"))
-    private List<GroupRoom> groupRooms = new ArrayList<>();
 
     @ManyToOne(cascade=CascadeType.MERGE)
     @JoinColumn(name="role_id")
     private Role role;
 
-
-    @ManyToMany
-    @JoinTable(
-            name = "users_ingamerole",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingamerole_id"))
-    private List<InGameRole> inGameRoles;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.MERGE)
     private List<Platform> platforms;
@@ -78,7 +55,13 @@ public class User implements UserDetails, CredentialsContainer {
     @OneToMany(mappedBy="reportedUser")
     private List<Report> reports;
 
-
+    @ManyToMany
+    @JoinTable(
+            name="users_friends",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name="friend_id")
+    )
+    private List<Friend> friendList;
 
     public String roleToString(){
         return this.role.getName();

@@ -1,6 +1,5 @@
 package com.evi.teamfindercore.domain;
 
-import com.evi.teamfindercore.domain.Chat.Chat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,7 +22,5 @@ public class Friend {
     @Builder.Default
     private boolean online = false;
 
-    @ManyToOne()
-    @JoinColumn(name="chat_id")
-    private Chat chat;
+    private Long chatId;
 }
