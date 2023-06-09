@@ -77,15 +77,15 @@ public class UserServiceImpl implements UserService {
     public void changeProfilePicture(MultipartFile pictureFile) {
         User currentUser = getCurrentUser();
         User user = userRepository.findById(currentUser.getId()).orElseThrow(() -> new UserNotFoundException("User not found id:" + currentUser.getId()));
-        user.getUserInfo().setProfileImgName(user.getId() + "-" + FileHandler.save(pictureFile, user.getId()));
+        user.setProfileImgName(user.getId() + "-" + FileHandler.save(pictureFile, user.getId()));
         userRepository.save(user);
     }
 
     @Override
     public Resource getProfilePicture(Long userId) {
         User user = getUserById(userId);
-        if (Optional.ofNullable(user.getUserInfo().getProfileImgName()).isPresent()) {
-            return FileHandler.load(user.getUserInfo().getProfileImgName());
+        if (Optional.ofNullable(user.getProfileImgName()).isPresent()) {
+            return FileHandler.load(user.getProfileImgName());
         }
         return null;
     }

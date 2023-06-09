@@ -15,7 +15,12 @@ public class UserProfileDTO {
 
     private Long id;
     private String username;
-    private UserInfo userInfo;
+    private String email;
+    private String info;
+    private String name;
+    private int age;
+    private int phone;
+    private String city;
     private RoleDTO role;
     private List<InGameRolesDTO> inGameRoles;
     private List<PlatformDTO> platforms;

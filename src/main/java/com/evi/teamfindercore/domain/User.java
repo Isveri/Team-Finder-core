@@ -36,8 +36,17 @@ public class User implements UserDetails, CredentialsContainer {
    // @NotBlank
     private String email;
 
-    @OneToOne
-    private UserInfo userInfo;
+    private String name;
+
+    private String info;
+
+    private Integer age;
+
+    private Integer phone;
+
+    private String city;
+
+    private String profileImgName;
 
     private String reason;
 

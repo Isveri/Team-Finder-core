@@ -23,7 +23,7 @@ public class FriendController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/requests")
+    @GetMapping("/loadFriendRequests")
     public ResponseEntity<List<FriendRequestDTO>> getFriendRequests() {
         return ResponseEntity.ok(friendService.loadFriendRequests());
     }

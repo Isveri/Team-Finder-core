@@ -6,6 +6,8 @@ import com.evi.teamfindercore.domain.User;
 import com.evi.teamfindercore.exception.AlreadyFriendException;
 import com.evi.teamfindercore.exception.AlreadyInvitedException;
 import com.evi.teamfindercore.exception.UserNotFoundException;
+import com.evi.teamfindercore.kafka.NotificationMessagingService;
+import com.evi.teamfindercore.kafka.model.Notification;
 import com.evi.teamfindercore.mapper.FriendMapper;
 import com.evi.teamfindercore.mapper.FriendRequestMapper;
 import com.evi.teamfindercore.model.FriendDTO;
@@ -37,6 +39,8 @@ public class FriendServiceImpl implements FriendService {
 
     private final FriendRepository friendRepository;
 
+    private final NotificationMessagingService notificationMessagingService;
+
     private User getUserById(Long userId){
 
         return userRepository.findById(userId)
@@ -56,8 +60,10 @@ public class FriendServiceImpl implements FriendService {
                 friendRequestRepository.save(friendRequest);
 
                 //TODO dodac kolejkowanie i powiadomienia
-                //sseService.sendSseFriendEvent(CustomNotificationDTO.builder().msg("New friend request").type(CustomNotification.NotifType.FRIENDREQUEST).build(),invitedUserId);
-
+                notificationMessagingService.sendNotification(Notification.builder()
+                        .notificationType(Notification.NotificationType.FRIENDREQUEST)
+                        .userId(invitedUserId).build()
+                        );
             } else {
                 throw new AlreadyInvitedException(invitedUser.getUsername() + " already friend");
             }

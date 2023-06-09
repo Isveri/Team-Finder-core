@@ -33,41 +33,30 @@ public class UsersBoot implements CommandLineRunner {
         Role role = roleRepository.findByName("ROLE_USER");
         Role admin = roleRepository.findByName("ROLE_ADMIN");
 
-        UserInfo userInfo1 = UserInfo.builder()
-                .name("Adam")
-                .age(21)
-                .city("Lublin")
-                .phone(551343223)
-                .info("I like cakes")
-                .build();
-
-
-        UserInfo userInfo2 = UserInfo.builder()
-                .name("Adam")
-                .age(21)
-                .city("Lublin")
-                .phone(551343223)
-                .info("I like cakes")
-                .build();
-
-        userInfoRepository.saveAll(Arrays.asList(userInfo1, userInfo2));
-
         User u1 = User.builder()
                 .username("Evi")
-                .role(admin)
                 .email("evistifate1@gmail.com")
-                .password(passwordEncoder.encode("Useruser1!"))
+                .name("Patryk")
+                .age(21)
+                .city("Lublin")
+                .role(admin)
                 .enabled(true)
-                .userInfo(userInfo1)
+                .phone(551345345)
+                .info("Challanger in every role in League of Legends. Global elite in CS:GO and Immortal in Valorant. 706gs BDO kek")
+                .password(passwordEncoder.encode("Useruser1!"))
                 .build();
 
         User u2 = User.builder()
                 .username("User")
                 .email("evistifate1@gmail.com")
+                .name("Adam")
                 .enabled(true)
                 .role(role)
+                .age(21)
+                .city("Lublin")
+                .phone(551343223)
+                .info("I like cakes")
                 .password(passwordEncoder.encode("Useruser1!"))
-                .userInfo(userInfo2)
                 .build();
 
         User u3 = User.builder()
@@ -80,16 +69,16 @@ public class UsersBoot implements CommandLineRunner {
 
         User u4 = User.builder()
                 .username("William")
-                .enabled(true)
                 .role(role)
+                .enabled(true)
                 .email("evistifate1@gmail.com")
                 .password(passwordEncoder.encode("Useruser1!"))
                 .build();
 
         User u5 = User.builder()
                 .username("Yeager")
-                .enabled(true)
                 .role(role)
+                .enabled(true)
                 .email("evistifate1@gmail.com")
                 .password(passwordEncoder.encode("Useruser1!"))
                 .accountNonLocked(false)
@@ -100,16 +89,17 @@ public class UsersBoot implements CommandLineRunner {
         User u6 = User.builder()
                 .username("Satoru")
                 .email("evistifate1@gmail.com")
-                .role(role)
                 .password(passwordEncoder.encode("Useruser1!"))
+                .role(role)
                 .accountNonLocked(false)
                 .enabled(true)
                 .bannedBy("Evi")
                 .reason("Toxicity, trolling, not taking serious warning from administration")
                 .build();
 
+        List<User> users = Arrays.asList(u1, u2, u3, u4, u5, u6);
+        userRepository.saveAll(users);
 
-        userRepository.saveAll(Arrays.asList(u1, u2, u3, u4, u5, u6));
 
     }
 
