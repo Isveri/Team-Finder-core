@@ -1,12 +1,14 @@
-package com.evi.teamfindercore.kafka;
+package com.evi.teamfindercore.messaging;
 
-import com.evi.teamfindercore.kafka.model.Notification;
+import com.evi.teamfindercore.messaging.model.Notification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
+@ConditionalOnProperty(prefix = "notification", name = "service",havingValue = "kafka")
 public class KafkaMessagingService implements NotificationMessagingService{
 
     private final KafkaTemplate<String,Notification> kafkaTemplate;

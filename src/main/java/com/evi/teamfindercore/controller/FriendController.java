@@ -12,12 +12,12 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/friends")
+@RequestMapping("api/v1/friends")
 public class FriendController {
 
     private final FriendService friendService;
 
-    @PostMapping("/sendRequest/{invitedUserId}")
+    @PostMapping("/sendFriendRequest/{invitedUserId}")
     public ResponseEntity<?> sendFriendRequest(@PathVariable Long invitedUserId) {
         friendService.sendFriendRequest(invitedUserId);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -29,13 +29,13 @@ public class FriendController {
     }
 
     //TODO - przemysleć sposób działania znajomych
-    @PutMapping("/acceptRequest/{requestId}")
+    @PutMapping("/acceptFriendRequest/{requestId}")
     public ResponseEntity<?> acceptFriendRequest(@PathVariable Long requestId) {
         friendService.acceptFriendRequest(requestId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/declineRequest/{requestId}")
+    @PutMapping("/declineFriendRequest/{requestId}")
     public ResponseEntity<?> declineFriendRequest(@PathVariable Long requestId) {
         friendService.declineRequest(requestId);
         return new ResponseEntity<>(HttpStatus.OK);

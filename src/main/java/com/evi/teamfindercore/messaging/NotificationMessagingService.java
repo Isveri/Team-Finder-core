@@ -1,6 +1,6 @@
-package com.evi.teamfindercore.kafka;
+package com.evi.teamfindercore.messaging;
 
-import com.evi.teamfindercore.kafka.model.Notification;
+import com.evi.teamfindercore.messaging.model.Notification;
 
 public interface NotificationMessagingService {
 
