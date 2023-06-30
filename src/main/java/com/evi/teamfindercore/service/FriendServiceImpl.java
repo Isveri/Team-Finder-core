@@ -15,9 +15,11 @@ import com.evi.teamfindercore.model.FriendRequestDTO;
 import com.evi.teamfindercore.repository.FriendRepository;
 import com.evi.teamfindercore.repository.FriendRequestRepository;
 import com.evi.teamfindercore.repository.UserRepository;
+import com.evi.teamfindercore.service.feign.ChatServiceFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,6 +42,8 @@ public class FriendServiceImpl implements FriendService {
     private final FriendRepository friendRepository;
 
     private final NotificationMessagingService notificationMessagingService;
+
+    private final ChatServiceFeignClient chatServiceFeignClient;
 
     private User getUserById(Long userId){
 
@@ -89,11 +93,12 @@ public class FriendServiceImpl implements FriendService {
 
         if (IsNotOnFriendList(sendingUser, user)) {
             //TODO wyslac do innego serwisu aby utworzyl nowy czat i dal id tutaj zeby wstawic
+            Long chatId = chatServiceFeignClient.createPrivateChat().getBody();
 
-            Friend friend = Friend.builder().chatId(1L).user(sendingUser).build();
+            Friend friend = Friend.builder().chatId(chatId).user(sendingUser).build();
             friendRepository.save(friend);
             user.getFriendList().add(friend);
-            friend = Friend.builder().chatId(1L).user(user).build();
+            friend = Friend.builder().chatId(chatId).user(user).build();
             sendingUser.getFriendList().add(friend);
             friendRepository.save(friend);
 
@@ -102,6 +107,13 @@ public class FriendServiceImpl implements FriendService {
             //TODO do kolejki dodac powiadomienie na podane Id
             //sseService.sendSseFriendEvent(CustomNotificationDTO.builder().msg("New friend request").type(CustomNotification.NotifType.FRIENDREQUEST).build(),sendingUser.getId());
            // sseService.sendSseFriendEvent(CustomNotificationDTO.builder().msg("New friend request").type(CustomNotification.NotifType.FRIENDREQUEST).build(),user.getId());
+            notificationMessagingService.sendNotification(Notification.builder()
+                    .notificationType(Notification.NotificationType.FRIENDREQUEST)
+                    .userId(user.getId()).build());
+
+            notificationMessagingService.sendNotification(Notification.builder()
+                    .notificationType(Notification.NotificationType.FRIENDREQUEST)
+                    .userId(sendingUser.getId()).build());
 
         } else {
             throw new AlreadyFriendException(sendingUser.getUsername() + " is already your friend");
@@ -113,7 +125,6 @@ public class FriendServiceImpl implements FriendService {
     public void declineRequest(Long requestId) {
         friendRequestRepository.delete(friendRequestRepository.findById(requestId).orElseThrow());
     }
-
     @Override
     public List<FriendDTO> getFriendList() {
         User user = getCurrentUser();

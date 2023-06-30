@@ -52,6 +52,8 @@ public class User implements UserDetails, CredentialsContainer {
 
     private String bannedBy;
 
+    @Transient
+    private String token;
 
     @ManyToOne(cascade=CascadeType.MERGE)
     @JoinColumn(name="role_id")
@@ -64,7 +66,7 @@ public class User implements UserDetails, CredentialsContainer {
     @OneToMany(mappedBy="reportedUser")
     private List<Report> reports;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name="users_friends",
             joinColumns = @JoinColumn(name="user_id"),
