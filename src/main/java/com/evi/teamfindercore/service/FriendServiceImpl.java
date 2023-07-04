@@ -63,7 +63,6 @@ public class FriendServiceImpl implements FriendService {
                 FriendRequest friendRequest = FriendRequest.builder().sendingUser(user).invitedUser(invitedUser).build();
                 friendRequestRepository.save(friendRequest);
 
-                //TODO dodac kolejkowanie i powiadomienia
                 notificationMessagingService.sendNotification(Notification.builder()
                         .notificationType(Notification.NotificationType.FRIENDREQUEST)
                         .userId(invitedUserId).build()
@@ -92,7 +91,7 @@ public class FriendServiceImpl implements FriendService {
         User sendingUser = getUserById(friendRequest.getSendingUser().getId());
 
         if (IsNotOnFriendList(sendingUser, user)) {
-            //TODO wyslac do innego serwisu aby utworzyl nowy czat i dal id tutaj zeby wstawic
+
             Long chatId = chatServiceFeignClient.createPrivateChat().getBody();
 
             Friend friend = Friend.builder().chatId(chatId).user(sendingUser).build();
@@ -104,9 +103,6 @@ public class FriendServiceImpl implements FriendService {
 
             userRepository.saveAll(Arrays.asList(user, sendingUser));
 
-            //TODO do kolejki dodac powiadomienie na podane Id
-            //sseService.sendSseFriendEvent(CustomNotificationDTO.builder().msg("New friend request").type(CustomNotification.NotifType.FRIENDREQUEST).build(),sendingUser.getId());
-           // sseService.sendSseFriendEvent(CustomNotificationDTO.builder().msg("New friend request").type(CustomNotification.NotifType.FRIENDREQUEST).build(),user.getId());
             notificationMessagingService.sendNotification(Notification.builder()
                     .notificationType(Notification.NotificationType.FRIENDREQUEST)
                     .userId(user.getId()).build());
