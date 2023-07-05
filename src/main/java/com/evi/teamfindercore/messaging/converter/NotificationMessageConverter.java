@@ -8,6 +8,7 @@ import javax.jms.TextMessage;
 import com.evi.teamfindercore.messaging.model.Notification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @Component
+@ConditionalOnProperty(prefix = "notification", name = "service",havingValue = "activemq")
 public class NotificationMessageConverter implements MessageConverter {
 
     private static final Logger LOGGER =
