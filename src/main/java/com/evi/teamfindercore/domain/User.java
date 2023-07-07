@@ -40,9 +40,9 @@ public class User implements UserDetails, CredentialsContainer {
 
     private String info;
 
-    private Integer age;
+    private String age;
 
-    private Integer phone;
+    private String phone;
 
     private String city;
 

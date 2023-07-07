@@ -22,7 +22,6 @@ public class UsersBoot implements CommandLineRunner {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final UserInfoRepository userInfoRepository;
     private final RoleRepository roleRepository;
 
     @Override
@@ -39,11 +38,11 @@ public class UsersBoot implements CommandLineRunner {
                 .username("Evi")
                 .email("evistifate1@gmail.com")
                 .name("Patryk")
-                .age(21)
+                .age("21")
                 .city("Lublin")
                 .role(admin)
                 .enabled(true)
-                .phone(551345345)
+                .phone("551345345")
                 .info("Challanger in every role in League of Legends. Global elite in CS:GO and Immortal in Valorant. 706gs BDO kek")
                 .password(passwordEncoder.encode("Useruser1!"))
                 .build();
@@ -54,9 +53,9 @@ public class UsersBoot implements CommandLineRunner {
                 .name("Adam")
                 .enabled(true)
                 .role(role)
-                .age(21)
+                .age("21")
                 .city("Lublin")
-                .phone(551343223)
+                .phone("551343223")
                 .info("I like cakes")
                 .password(passwordEncoder.encode("Useruser1!"))
                 .build();

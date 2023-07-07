@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -38,7 +39,7 @@ public class UserController {
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> updateUser(@RequestBody @Valid UserDTO userDTO) {
         return ResponseEntity.ok(userService.updateUserByDTO(userDTO));
     }
 

@@ -18,8 +18,8 @@ public class UserProfileDTO {
     private String email;
     private String info;
     private String name;
-    private int age;
-    private int phone;
+    private String age;
+    private String phone;
     private String city;
     private RoleDTO role;
     private List<InGameRolesDTO> inGameRoles;
