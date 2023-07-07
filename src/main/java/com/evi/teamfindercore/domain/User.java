@@ -74,6 +74,13 @@ public class User implements UserDetails, CredentialsContainer {
     )
     private List<Friend> friendList;
 
+    @ManyToMany
+    @JoinTable(
+            name = "users_ingamerole",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingamerole_id"))
+    private List<InGameRole> inGameRoles;
+
     public String roleToString(){
         return this.role.getName();
     }

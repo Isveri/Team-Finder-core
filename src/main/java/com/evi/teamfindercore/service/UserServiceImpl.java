@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
         //TODO dodac walidacje z hibernate - mozliwe ze trzeba bedzie nowe DTO dac narazie zostanie tak
         userDTO.setPassword(user.getPassword());
 
-        return userMapper.mapUserToUserDTO(userMapper.updateUserFromUserDTO(userDTO, user));
+        return userMapper.mapUserToUserDTO(userRepository.save(userMapper.updateUserFromUserDTO(userDTO, user)));
     }
 
     @Override
