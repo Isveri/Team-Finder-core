@@ -7,7 +7,6 @@ import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-@Component
 @Mapper(builder = @Builder(disableBuilder = true),
         uses = UserMapper.class,
         injectionStrategy = InjectionStrategy.CONSTRUCTOR)

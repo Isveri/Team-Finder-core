@@ -36,24 +36,13 @@ public class AdminServiceImpl implements AdminService {
 
         reportRepository.findAllByReportedUserEnabled(true)
                 .forEach((report) -> {
-                    if (!reportedUsers.containsKey(report.getReportedUser().getUsername())) {
-                        reportedUsers.put(report.getReportedUser().getUsername(), new ReportedUserDTO());
-                    }
-                    ReportedUserDTO reportedUserDTO = reportedUsers.get(report.getReportedUser().getUsername());
+                    ReportedUserDTO reportedUserDTO = new ReportedUserDTO();
                     reportedUserDTO.setReportedUser(userMapper.mapUserToUserMsgDTO(report.getReportedUser()));
                     reportedUserDTO.addReport(reportMapper.mapReportToReportDTO(report));
                     reportedUsers.put(report.getReportedUser().getUsername(), reportedUserDTO);
                 });
 
         return new ArrayList<>(reportedUsers.values());
-    }
-
-    @Override
-    public void deleteReports(Long userId) {
-        User user = getUserById(userId);
-        user.setReports(null);
-        reportRepository.deleteAll(reportRepository.findAllByReportedUserId(userId));
-        userRepository.save(user);
     }
 
     @Override
@@ -77,9 +66,9 @@ public class AdminServiceImpl implements AdminService {
     public void banUser(BannedUserDTO bannedUserDTO) {
         User admin = getCurrentUser();
         Long userId = bannedUserDTO.getId();
-        User userToBan =getUserById(userId);
+        User userToBan = getUserById(userId);
         if (!userToBan.isAccountNonLocked()) {
-            throw new AlreadyBannedException("User "+userToBan.getUsername()+" is already banned");
+            throw new AlreadyBannedException("User " + userToBan.getUsername() + " is already banned");
         }
         userToBan.setAccountNonLocked(false);
         userToBan.setBannedBy(admin.getUsername());
@@ -89,7 +78,7 @@ public class AdminServiceImpl implements AdminService {
         userRepository.save(userToBan);
     }
 
-    private User getUserById(Long userId){
+    private User getUserById(Long userId) {
 
         return userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found id:" + userId));

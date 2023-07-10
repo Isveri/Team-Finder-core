@@ -20,7 +20,7 @@ public class FileHandler {
                 directory.mkdir();
             }
             Path root = Paths.get("..\\ImgStorage");
-            removeIfUserHadPicture(directory,userId);
+            removeIfUserHadPicture(directory, userId);
             CopyOption[] options = {StandardCopyOption.REPLACE_EXISTING};
             Files.copy(file.getInputStream(), root.resolve(userId + "-" + file.getOriginalFilename()), options);
             return file.getOriginalFilename();
@@ -45,11 +45,11 @@ public class FileHandler {
         }
     }
 
-    public static void removeIfUserHadPicture(File directory,Long userId){
-        FileFilter fileFilter = file-> file.getName().startsWith(userId+"-");
+    public static void removeIfUserHadPicture(File directory, Long userId) {
+        FileFilter fileFilter = file -> file.getName().startsWith(userId + "-");
         File[] allFiles = directory.listFiles(fileFilter);
-        if(allFiles != null){
-            for(File file : allFiles){
+        if (allFiles != null) {
+            for (File file : allFiles) {
                 file.delete();
             }
         }

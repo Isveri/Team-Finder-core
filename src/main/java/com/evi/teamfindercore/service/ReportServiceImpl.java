@@ -24,7 +24,7 @@ public class ReportServiceImpl implements ReportService {
     private final ReportRepository reportRepository;
     private final ReportMapper reportMapper;
 
-    private User getUserById(Long userId){
+    private User getUserById(Long userId) {
 
         return userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found id:" + userId));
@@ -46,6 +46,14 @@ public class ReportServiceImpl implements ReportService {
         } else {
             throw new AlreadyReportedException("You already reported this user");
         }
+    }
+
+    @Override
+    public void deleteReports(Long userId) {
+        User user = getUserById(userId);
+        user.setReports(null);
+        reportRepository.deleteAll(reportRepository.findAllByReportedUserId(userId));
+        userRepository.save(user);
     }
 
 

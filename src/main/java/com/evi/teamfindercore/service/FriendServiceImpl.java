@@ -45,7 +45,7 @@ public class FriendServiceImpl implements FriendService {
 
     private final ChatServiceFeignClient chatServiceFeignClient;
 
-    private User getUserById(Long userId){
+    private User getUserById(Long userId) {
 
         return userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found id:" + userId));
@@ -66,7 +66,7 @@ public class FriendServiceImpl implements FriendService {
                 notificationMessagingService.sendNotification(Notification.builder()
                         .notificationType(Notification.NotificationType.FRIENDREQUEST)
                         .userId(invitedUserId).build()
-                        );
+                );
             } else {
                 throw new AlreadyInvitedException(invitedUser.getUsername() + " already friend");
             }
@@ -90,7 +90,7 @@ public class FriendServiceImpl implements FriendService {
         User user = getUserById(getCurrentUser().getId());
         User sendingUser = getUserById(friendRequest.getSendingUser().getId());
 
-        if (IsNotOnFriendList(sendingUser, user)) {
+        if (IsNotOnFriendList(sendingUser, user) && getCurrentUser().equals(friendRequest.getInvitedUser())) {
 
             Long chatId = chatServiceFeignClient.createPrivateChat().getBody();
 
@@ -121,6 +121,7 @@ public class FriendServiceImpl implements FriendService {
     public void declineRequest(Long requestId) {
         friendRequestRepository.delete(friendRequestRepository.findById(requestId).orElseThrow());
     }
+
     @Override
     public List<FriendDTO> getFriendList() {
         User user = getCurrentUser();

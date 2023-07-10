@@ -8,8 +8,6 @@ import java.util.List;
 public interface AdminService {
     List<ReportedUserDTO> getReportedUsers();
 
-    void deleteReports(Long userId);
-
     List<BannedUserDTO> getBannedUsers();
 
     void unbanUser(Long userId);

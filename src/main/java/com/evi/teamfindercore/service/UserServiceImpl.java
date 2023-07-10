@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.findByUsername(username)
                 .map(userMapper::mapUserToUserDTO)
-                .orElseThrow(()-> new UsernameNotFoundException("There is no user with username: "+username));
+                .orElseThrow(() -> new UsernameNotFoundException("There is no user with username: " + username));
 
     }
 
@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    private User getUserById(Long userId){
+    private User getUserById(Long userId) {
 
         return userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found id:" + userId));

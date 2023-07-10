@@ -22,7 +22,7 @@ public class Report {
     private String reason;
 
     @ManyToOne()
-    @JoinColumn(name="reportedUser_id")
+    @JoinColumn(name = "reportedUser_id")
     private User reportedUser;
 
     @OneToOne

@@ -17,32 +17,35 @@ public class FriendController {
 
     private final FriendService friendService;
 
-    @PostMapping("/sendFriendRequest/{invitedUserId}")
+    @PostMapping("/requests/{invitedUserId}")
     public ResponseEntity<?> sendFriendRequest(@PathVariable Long invitedUserId) {
         friendService.sendFriendRequest(invitedUserId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/loadFriendRequests")
+    @GetMapping("/requests")
     public ResponseEntity<List<FriendRequestDTO>> getFriendRequests() {
         return ResponseEntity.ok(friendService.loadFriendRequests());
     }
 
     //TODO - przemysleć sposób działania znajomych
-    @PutMapping("/acceptFriendRequest/{requestId}")
+    @PutMapping("/requests/accept/{requestId}")
     public ResponseEntity<?> acceptFriendRequest(@PathVariable Long requestId) {
         friendService.acceptFriendRequest(requestId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/declineFriendRequest/{requestId}")
+    @PutMapping("/requests/decline/{requestId}")
     public ResponseEntity<?> declineFriendRequest(@PathVariable Long requestId) {
         friendService.declineRequest(requestId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/loadFriends")
+    @GetMapping
     public ResponseEntity<List<FriendDTO>> getFriendList() {
         return ResponseEntity.ok(friendService.getFriendList());
     }
+
+    //TODO - remove friend
+
 }

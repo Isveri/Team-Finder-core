@@ -6,12 +6,10 @@ import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-@Component
 @Mapper(builder = @Builder(disableBuilder = true))
 public abstract class FriendRequestMapper {
 
     public abstract FriendRequestDTO mapFriendRequestToFriendRequestDTO(FriendRequest friendRequest);
 
-    public abstract FriendRequest mapFriendRequestDTOToFriendRequest(FriendRequestDTO friendRequestDTO);
 
 }

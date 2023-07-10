@@ -21,7 +21,7 @@ public class UserDTO {
     private String name;
     @Email
     private String email;
-    @Size(max=150)
+    @Size(max = 150)
     private String info;
 
     @Pattern(regexp = "^(\\s*|[1-9]{1}[0-9]{1})$")

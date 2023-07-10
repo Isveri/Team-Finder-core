@@ -22,25 +22,26 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/all")
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
-
-        return ResponseEntity.ok(userService.getAllUsers());
-    }
-    @GetMapping("/{username}")
-    public ResponseEntity<UserDTO> getUserByUsername(@PathVariable String username){
-        return ResponseEntity.ok(userService.getUserByUsername(username));
-    }
-
     @GetMapping
     public ResponseEntity<UserProfileDTO> getAlreadyLoggedUser() {
 
         return ResponseEntity.ok(userService.getLoggedUser());
     }
 
-    @PutMapping("/edit")
+    @PutMapping
     public ResponseEntity<UserDTO> updateUser(@RequestBody @Valid UserDTO userDTO) {
         return ResponseEntity.ok(userService.updateUserByDTO(userDTO));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+
+        return ResponseEntity.ok(userService.getAllUsers());
+    }
+
+    @GetMapping("/{username}")
+    public ResponseEntity<UserDTO> getUserByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(userService.getUserByUsername(username));
     }
 
     @GetMapping("/profile/{userId}")
@@ -48,14 +49,14 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserProfile(userId));
     }
 
-    @PatchMapping(path = "/profilePicture")
+    @PostMapping(path = "/profile/picture")
     public ResponseEntity<Resource> setProfilePicture(@RequestParam("profilePicture") MultipartFile pictureFile) {
         userService.changeProfilePicture(pictureFile);
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
-    @GetMapping("/profilePicture/{userId}")
+    @GetMapping("/profile/picture/{userId}")
     public ResponseEntity<Resource> getProfilePicture(@PathVariable Long userId) {
         Resource file = userService.getProfilePicture(userId);
         if (file != null) {

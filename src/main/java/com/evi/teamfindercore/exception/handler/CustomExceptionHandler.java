@@ -14,29 +14,31 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class CustomExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ErrorCodeMsg> userNotFound(UserNotFoundException e){
+    public ResponseEntity<ErrorCodeMsg> userNotFound(UserNotFoundException e) {
         log.error(e.getMessage());
         return ResponseEntity.badRequest().body(ErrorCodeMsg.builder().code(e.getCode()).build());
     }
 
     @ExceptionHandler({AlreadyBannedException.class})
-    public ResponseEntity<ErrorCodeMsg> alreadyBannedException(AlreadyBannedException e){
+    public ResponseEntity<ErrorCodeMsg> alreadyBannedException(AlreadyBannedException e) {
         log.error(e.getMessage());
         return ResponseEntity.badRequest().body(ErrorCodeMsg.builder().code(e.getCode()).build());
     }
 
     @ExceptionHandler({AlreadyInvitedException.class})
-    public ResponseEntity<ErrorCodeMsg> alreadyInvitedException(AlreadyInvitedException e){
+    public ResponseEntity<ErrorCodeMsg> alreadyInvitedException(AlreadyInvitedException e) {
         log.error(e.getMessage());
         return ResponseEntity.badRequest().body(ErrorCodeMsg.builder().code(e.getCode()).build());
     }
+
     @ExceptionHandler({AlreadyFriendException.class})
-    public ResponseEntity<ErrorCodeMsg> alreadyFriendException(AlreadyFriendException e){
+    public ResponseEntity<ErrorCodeMsg> alreadyFriendException(AlreadyFriendException e) {
         log.error(e.getMessage());
         return ResponseEntity.badRequest().body(ErrorCodeMsg.builder().code(e.getCode()).build());
     }
+
     @ExceptionHandler({AlreadyReportedException.class})
-    public ResponseEntity<ErrorCodeMsg> alreadyReportedException(AlreadyReportedException e){
+    public ResponseEntity<ErrorCodeMsg> alreadyReportedException(AlreadyReportedException e) {
         log.error(e.getMessage());
         return ResponseEntity.badRequest().body(ErrorCodeMsg.builder().code(e.getCode()).build());
     }

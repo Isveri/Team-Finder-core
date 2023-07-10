@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @FeignClient(name = "chat-service")
 public interface ChatServiceFeignClient {
 
-    @RequestMapping(method = RequestMethod.POST, value="/api/v1/createPrivate")
+    @RequestMapping(method = RequestMethod.POST, value = "/api/v1/chat/private")
     ResponseEntity<Long> createPrivateChat();
 
 }

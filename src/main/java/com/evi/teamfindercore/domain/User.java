@@ -19,8 +19,8 @@ import java.util.List;
 @Getter
 @Entity
 @Builder
-@Table(name="users")
-@EqualsAndHashCode(of = {"id","username","email"})
+@Table(name = "users")
+@EqualsAndHashCode(of = {"id", "username", "email"})
 @Where(clause = "deleted=false")
 public class User implements UserDetails, CredentialsContainer {
     @Id
@@ -33,7 +33,7 @@ public class User implements UserDetails, CredentialsContainer {
     @NotBlank
     private String password;
 
-   // @NotBlank
+    // @NotBlank
     private String email;
 
     private String name;
@@ -55,22 +55,22 @@ public class User implements UserDetails, CredentialsContainer {
     @Transient
     private String token;
 
-    @ManyToOne(cascade=CascadeType.MERGE)
-    @JoinColumn(name="role_id")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "role_id")
     private Role role;
 
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
     private List<Platform> platforms;
 
-    @OneToMany(mappedBy="reportedUser")
+    @OneToMany(mappedBy = "reportedUser")
     private List<Report> reports;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name="users_friends",
-            joinColumns = @JoinColumn(name="user_id"),
-            inverseJoinColumns = @JoinColumn(name="friend_id")
+            name = "users_friends",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "friend_id")
     )
     private List<Friend> friendList;
 
@@ -81,7 +81,7 @@ public class User implements UserDetails, CredentialsContainer {
             inverseJoinColumns = @JoinColumn(name = "ingamerole_id"))
     private List<InGameRole> inGameRoles;
 
-    public String roleToString(){
+    public String roleToString() {
         return this.role.getName();
     }
 
@@ -97,7 +97,6 @@ public class User implements UserDetails, CredentialsContainer {
 
     @Builder.Default
     private boolean deleted = false;
-
 
 
     @Override

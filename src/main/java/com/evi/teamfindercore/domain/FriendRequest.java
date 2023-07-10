@@ -18,11 +18,11 @@ public class FriendRequest {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="sendingUser_id")
+    @JoinColumn(name = "sendingUser_id")
     private User sendingUser;
 
     @OneToOne
-    @JoinColumn(name="invitedUser_id")
+    @JoinColumn(name = "invitedUser_id")
     private User invitedUser;
 
     @Builder.Default

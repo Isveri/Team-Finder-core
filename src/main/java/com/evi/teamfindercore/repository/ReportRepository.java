@@ -7,8 +7,9 @@ import java.util.List;
 
 public interface ReportRepository extends JpaRepository<Report, Long> {
 
-     List<Report> findAllByReportedUserEnabled(boolean value);
-     boolean existsByReportedByIdAndReportedUserId(Long reportedById, Long reportedUserId);
+    List<Report> findAllByReportedUserEnabled(boolean value);
 
-     List<Report> findAllByReportedUserId(Long id);
+    boolean existsByReportedByIdAndReportedUserId(Long reportedById, Long reportedUserId);
+
+    List<Report> findAllByReportedUserId(Long id);
 }
