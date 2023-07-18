@@ -11,6 +11,7 @@ import com.evi.teamfindercore.repository.ReportRepository;
 import com.evi.teamfindercore.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,6 +63,7 @@ public class AdminServiceImpl implements AdminService {
         userRepository.save(user);
     }
 
+    @Transactional
     @Override
     public void banUser(BannedUserDTO bannedUserDTO) {
         User admin = getCurrentUser();

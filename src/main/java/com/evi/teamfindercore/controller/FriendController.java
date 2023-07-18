@@ -28,7 +28,6 @@ public class FriendController {
         return ResponseEntity.ok(friendService.loadFriendRequests());
     }
 
-    //TODO - przemysleć sposób działania znajomych
     @PutMapping("/requests/accept/{requestId}")
     public ResponseEntity<?> acceptFriendRequest(@PathVariable Long requestId) {
         friendService.acceptFriendRequest(requestId);
@@ -46,6 +45,16 @@ public class FriendController {
         return ResponseEntity.ok(friendService.getFriendList());
     }
 
-    //TODO - remove friend
+    @DeleteMapping("/{friendId}")
+    public ResponseEntity<Void> removeFriend(@PathVariable Long friendId){
+        friendService.removeFriend(friendId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping()
+    public ResponseEntity<Void> removeAllFriends() {
+        friendService.removeAllFriends();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

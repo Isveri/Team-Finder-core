@@ -16,4 +16,8 @@ public interface FriendService {
     void declineRequest(Long requestId);
 
     List<FriendDTO> getFriendList();
+
+    void removeFriend(Long friendId);
+
+    void removeAllFriends();
 }

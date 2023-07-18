@@ -10,6 +10,7 @@ import com.evi.teamfindercore.repository.ReportRepository;
 import com.evi.teamfindercore.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -48,6 +49,7 @@ public class ReportServiceImpl implements ReportService {
         }
     }
 
+    @Transactional
     @Override
     public void deleteReports(Long userId) {
         User user = getUserById(userId);

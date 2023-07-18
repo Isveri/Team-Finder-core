@@ -18,10 +18,9 @@ import com.evi.teamfindercore.repository.UserRepository;
 import com.evi.teamfindercore.service.feign.ChatServiceFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.evi.teamfindercore.utils.UserDetailsHelper.getCurrentUser;
@@ -83,6 +82,7 @@ public class FriendServiceImpl implements FriendService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public void acceptFriendRequest(Long requestId) {
 
@@ -128,7 +128,55 @@ public class FriendServiceImpl implements FriendService {
         return user.getFriendList().stream().map(friendMapper::mapFriendToFriendDTO).collect(Collectors.toList());
     }
 
+    @Transactional
+    @Override
+    public void removeFriend(Long friendId) {
+
+        User user = getUserById(getCurrentUser().getId());
+        user.getFriendList().remove(friendRepository.findById(friendId)
+                .orElseThrow(()-> new UserNotFoundException("Friend not found id:" + friendId)));
+        removeFriendFromOtherSide(friendId);
+        userRepository.save(user);
+
+    }
+
+    @Transactional
+    @Override
+    public void removeAllFriends() {
+
+        User user = getUserById(getCurrentUser().getId());
+        List<Friend> friendsToRemove = new ArrayList<>();
+        user.getFriendList().forEach(friend -> {
+            this.removeFriend(friend.getId());
+            friendsToRemove.add(friend);
+        });
+        user.getFriendList().removeAll(friendsToRemove);
+        userRepository.save(user);
+
+
+    }
+
+    public void removeFriendFromOtherSide(Long friendId){
+        Optional<Friend> friend = friendRepository.findById(friendId);
+
+        if (friend.isPresent()) {
+            friendRepository.delete(friend.get());
+
+            Optional<Friend> friend1 = friendRepository.findFriendByChatId(friend.get().getChatId());
+            User user1 = getUserById(friend.get().getUser().getId());
+            friend1.ifPresent(value -> {
+                user1.getFriendList().remove(value);
+                friendRepository.delete(friend1.get());
+            });
+            userRepository.save(user1);
+        } else {
+            throw new UserNotFoundException("Friend not found id:" + friendId);
+        }
+    }
+
+
     private boolean IsNotOnFriendList(User user, User invitedUser) {
         return invitedUser.getFriendList().stream().filter(friend -> user.equals(friend.getUser())).findFirst().orElse(null) == null;
     }
+
 }
