@@ -1,8 +1,7 @@
-package com.evi.teamfindercore.messaging;
+package com.evi.teamfindercore.messaging.service;
 
 import com.evi.teamfindercore.messaging.model.Notification;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;

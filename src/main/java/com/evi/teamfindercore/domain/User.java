@@ -66,13 +66,8 @@ public class User implements UserDetails, CredentialsContainer {
     @OneToMany(mappedBy = "reportedUser")
     private List<Report> reports;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "users_friends",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "friend_id")
-    )
-    private List<Friend> friendList;
+    @OneToMany(mappedBy = "friend",fetch = FetchType.EAGER)
+    private List<UserFriend> friendList;
 
     @ManyToMany
     @JoinTable(

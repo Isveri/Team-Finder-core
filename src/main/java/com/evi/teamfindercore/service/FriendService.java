@@ -17,7 +17,9 @@ public interface FriendService {
 
     List<FriendDTO> getFriendList();
 
-    void removeFriend(Long friendId);
+    List<Long> removeFriend(Long friendId);
 
-    void removeAllFriends();
+    List<Long> removeAllFriends();
+
+    void rollbackFriendsDeletion(List<Long> friendsIds);
 }

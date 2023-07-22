@@ -12,6 +12,5 @@ public class FriendDTO {
 
     private Long id;
     private UserMsgDTO user;
-    private boolean online;
     private Long chatId;
 }

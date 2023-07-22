@@ -1,4 +1,4 @@
-package com.evi.teamfindercore.messaging;
+package com.evi.teamfindercore.messaging.service;
 
 import com.evi.teamfindercore.messaging.model.Notification;
 import lombok.RequiredArgsConstructor;

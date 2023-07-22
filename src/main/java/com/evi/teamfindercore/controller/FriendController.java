@@ -52,9 +52,15 @@ public class FriendController {
     }
 
     @DeleteMapping()
-    public ResponseEntity<Void> removeAllFriends() {
-        friendService.removeAllFriends();
+    public List<Long> removeAllFriends() {
+        return friendService.removeAllFriends();
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> rollbackDelete(@RequestParam List<Long> removedIds) {
+        friendService.rollbackFriendsDeletion(removedIds);
         return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
 }
