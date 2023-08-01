@@ -33,7 +33,6 @@ public class User implements UserDetails, CredentialsContainer {
     @NotBlank
     private String password;
 
-    // @NotBlank
     private String email;
 
     private String name;
