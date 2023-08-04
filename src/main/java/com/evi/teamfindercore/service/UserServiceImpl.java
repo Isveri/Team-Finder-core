@@ -50,10 +50,6 @@ public class UserServiceImpl implements UserService {
         long id = currentUser.getId();
         return userRepository.findById(id)
                 .map(userMapper::mapUserToUserProfileDTO)
-                .map(userDTO -> {
-                    userDTO.setId(id);          //TODO sprawdzic dlaczego tak
-                    return userDTO;
-                })
                 .orElseThrow(() -> new UserNotFoundException("User not found id:" + id));
     }
 
@@ -74,8 +70,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changeProfilePicture(MultipartFile pictureFile) {
-        User currentUser = getCurrentUser();
-        User user = userRepository.findById(currentUser.getId()).orElseThrow(() -> new UserNotFoundException("User not found id:" + currentUser.getId()));
+        User user = getUserById(getCurrentUser().getId());
         user.setProfileImgName(user.getId() + "-" + FileHandler.save(pictureFile, user.getId()));
         userRepository.save(user);
     }

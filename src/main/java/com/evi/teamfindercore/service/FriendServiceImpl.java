@@ -104,10 +104,15 @@ public class FriendServiceImpl implements FriendService {
                     throw new RuntimeException("There is problem creating your private chat, try again later");
                 }
 
-                UserFriend userFriend = UserFriend.builder().user(sendingUser).friend(user).chatId(chatId).build();
-                usersFriendsRepository.save(userFriend);
-                UserFriend acceptingUserFriend = UserFriend.builder().user(user).friend(sendingUser).chatId(chatId).build();
-                usersFriendsRepository.save(acceptingUserFriend);
+                try {
+                    UserFriend userFriend = UserFriend.builder().user(sendingUser).friend(user).chatId(chatId).build();
+                    usersFriendsRepository.save(userFriend);
+                    UserFriend acceptingUserFriend = UserFriend.builder().user(user).friend(sendingUser).chatId(chatId).build();
+                    usersFriendsRepository.save(acceptingUserFriend);
+                }catch (Exception e){
+                    chatServiceFeignClient.deletePrivateChat(chatId);
+                    throw new RuntimeException("Error accepting friend request, request id: "+requestId);
+                }
 
             }
             notificationMessagingService.sendNotification(Notification.builder()

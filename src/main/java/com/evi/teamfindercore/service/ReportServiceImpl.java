@@ -40,7 +40,6 @@ public class ReportServiceImpl implements ReportService {
         if (!reportRepository.existsByReportedByIdAndReportedUserId(reportedBy.getId(), userToReport.getId())) {
             Report report = reportMapper.mapReportDTOToReport(reportDTO);
             report.setReportedBy(reportedBy);
-            userToReport.getReports().add(report);
             report.setReportedUser(userToReport);
             report.setDate(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
             reportRepository.save(report);
